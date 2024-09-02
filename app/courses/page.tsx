@@ -10,7 +10,7 @@ import { Spinner } from '@nextui-org/react';
 import useSWR from 'swr';
 import { SWRConfig } from 'swr';
 
-export const courseTypeLabels: { [key in CourseType]: string } = {
+const courseTypeLabels: { [key in CourseType]: string } = {
   LEGACY: 'Legacy',
   V1: 'Version 1',
   V2: 'Version 2',

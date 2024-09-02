@@ -1,7 +1,6 @@
 'use client';
 
-import { Course, CourseLanguage } from '@/models/course';
-import { courseTypeLabels } from '@/app/courses/page';
+import { Course, CourseLanguage, CourseType } from '@/models/course';
 import { Card, CardBody, Chip } from '@nextui-org/react';
 import moment from 'moment';
 
@@ -11,6 +10,13 @@ const colorVariants: { [key in CourseLanguage]: string } = {
   Java: 'bg-cyan-500',
   JavaScript: 'bg-orange-500',
   Go: 'bg-red-800',
+};
+
+const courseTypeLabels: { [key in CourseType]: string } = {
+  LEGACY: 'Legacy',
+  V1: 'Version 1',
+  V2: 'Version 2',
+  V3: 'Version 3',
 };
 
 function CourseInfoDetail({ title, description }: { title: string; description: React.ReactNode }) {
