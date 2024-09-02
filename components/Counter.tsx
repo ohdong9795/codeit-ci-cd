@@ -9,10 +9,19 @@ const Button = (props: { onClick: () => void; text: string }) => {
 function Counter() {
   const [count, setCount] = useState(0);
   const [checked, setChecked] = useState(false);
-  const initialTitleRef = useRef(document.title);
+  const initialTitleRef = useRef<string | null>(null);
 
   useEffect(() => {
-    document.title = checked ? `Total number of clicks: ${count}` : initialTitleRef.current;
+    // 브라우저에서만 실행되는 코드
+    if (typeof document !== 'undefined') {
+      initialTitleRef.current = document.title;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.title = checked ? `Total number of clicks: ${count}` : initialTitleRef.current || '';
+    }
   }, [checked, count]);
 
   return (
