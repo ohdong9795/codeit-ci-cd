@@ -6,12 +6,14 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:20.17.0-browsers
+      - image: cimg/node:18.17.0-browsers
     working_directory: ~/repo
 
 workflows:
   build:
     jobs:
-      - cypress/run:
-          start-command: 'npm run start'
-          executor: node-executor
+      - cypress/install
+      - run-tests:
+          command: run-tests
+          start-command: npm run build && npm run start
+          wait-on: http://localhost:3000
