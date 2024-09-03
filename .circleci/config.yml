@@ -1,8 +1,17 @@
 version: 2.1
+
 orbs:
   cypress: cypress-io/cypress@3
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:20.17.0-browsers
+    working_directory: ~/repo
+
 workflows:
   build:
     jobs:
       - cypress/run:
           start-command: 'npm run start'
+          executor: node-executor
