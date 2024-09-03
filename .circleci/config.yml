@@ -26,8 +26,9 @@ jobs:
       - run:
           name: Wait for the server to be ready
           command: npx wait-on http://localhost:3000
-      - cypress/run:
-          browser: chrome
+      - run:
+          name: Run Cypress tests
+          command: npx cypress run --browser chrome
 
 workflows:
   build:
