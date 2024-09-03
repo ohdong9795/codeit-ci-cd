@@ -1,12 +1,28 @@
 version: 2.1
 
-orbs:
-  cypress: cypress-io/cypress@3
+jobs:
+  cypress-test:
+    docker:
+      - image: cimg/node:18.17.0-browsers  # Node.js 18.17.0 이상 사용
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Build the project
+          command: npm run build
+      - run:
+          name: Start server and wait for it to be ready
+          command: |
+            npm run start &
+            npx wait-on http://localhost:3000
+      - run:
+          name: Run Cypress tests
+          command: npx cypress run
 
 workflows:
-  build:
+  version: 2
+  build_and_test:
     jobs:
-      - cypress/run:
-          node-version: 18.17.0
-          start: npm run start
-          wait-on: http://localhost:3000
+      - cypress-test
