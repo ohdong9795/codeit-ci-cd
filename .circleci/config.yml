@@ -12,8 +12,6 @@ executors:
 workflows:
   build:
     jobs:
-      - cypress/install
-      - run-tests:
-          command: run-tests
+      - cypress/run:
           start-command: npm run build && npm run start
           wait-on: http://localhost:3000
