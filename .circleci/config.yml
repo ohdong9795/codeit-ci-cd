@@ -9,9 +9,27 @@ executors:
       - image: cimg/node:18.17.0-browsers
     working_directory: ~/repo
 
+jobs:
+  build-and-test:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Build the project
+          command: npm run build
+      - run:
+          name: Start server in the background
+          command: npm run start &
+      - run:
+          name: Wait for the server to be ready
+          command: npx wait-on http://localhost:3000
+      - cypress/run:
+          browser: chrome
+
 workflows:
   build:
     jobs:
-      - cypress/run:
-          start-command: npm run build && npm run start
-          wait-on: http://localhost:3000
+      - build-and-test
