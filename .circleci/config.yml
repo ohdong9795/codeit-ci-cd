@@ -9,11 +9,9 @@ jobs:
       - run:
           command: npm ci
       - run:
-          command: npm run build  # 빌드 단계 추가
+          command: npm run build
       - run:
-          command: |
-            npm run start &
-            npx wait-on http://localhost:3000
+          command: npm run start & npx wait-on http://localhost:3000
       - run:
           command: npx cypress run
 
