@@ -1,19 +1,21 @@
 version: 2.1
 
 jobs:
-  build_and_test:
+  cypress-test:
     docker:
       - image: cimg/node:18.17.0-browsers
     steps:
       - checkout
-      - run:
-          name: Install dependencies
+      - run: # Install dependencies
           command: npm ci
-      - run:
-          name: Start server
+      - run: # Start server and wait for it to be ready
           command: |
             npm run start &
             npx wait-on http://localhost:3000
-      - run:
-          name: Run Cypress tests
+      - run: # Run Cypress tests
           command: npx cypress run
+
+workflows:
+  build_and_test:
+    jobs:
+      - cypress-test
