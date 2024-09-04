@@ -6,13 +6,15 @@ jobs:
       - image: cimg/node:18.17.0-browsers
     steps:
       - checkout
-      - run: # Install dependencies
+      - run:
           command: npm ci
-      - run: # Start server and wait for it to be ready
+      - run:
+          command: npm run build  # 빌드 단계 추가
+      - run:
           command: |
             npm run start &
             npx wait-on http://localhost:3000
-      - run: # Run Cypress tests
+      - run:
           command: npx cypress run
 
 workflows:
